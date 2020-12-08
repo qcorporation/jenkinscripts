@@ -13,7 +13,7 @@ pipeline {
                 script{
                     docker_image = docker.build("test-jenkins:0.1", ".")
                     docker.image('test-jenkins:0.1').inside(){
-                        python3 /TEST/runner.py
+                        sh "python3 /TEST/runner.py"
                     }
                 }
             }
