@@ -1,13 +1,16 @@
-node{
-    stage('Build & Run Docker Image') {
-        steps {
-            script{
-                docker.build("test-jenkins:0.1", ".")
-                docker.image('test-jenkins:0.1').withRun('') { c->
-                    sh "docker logs ${c.id}"
+pipeline {
+    agent any
+
+    stages {
+        stage('Build & Run Docker Image') {
+            steps {
+                script{
+                    docker.build("test-jenkins:0.1", ".")
+                    docker.image('test-jenkins:0.1').withRun('') { c->
+                        sh "docker logs ${c.id}"
+                    }
                 }
             }
         }
     }
-
 }
