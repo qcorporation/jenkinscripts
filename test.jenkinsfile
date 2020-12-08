@@ -1,8 +1,4 @@
 pipeline{
-    parameters {
-    }
-    options {
-    }
     environment {
         DOCKER_IMG_TAG="""${sh(
                 returnStdout: true,
