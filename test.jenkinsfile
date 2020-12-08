@@ -1,4 +1,7 @@
 pipeline {
+    environment {
+        docker_image = ''
+    }
     agent any
     options { 
         timestamps()
@@ -8,7 +11,7 @@ pipeline {
         stage('Build & Run Docker Image') {
             steps {
                 script{
-                    docker.build "test-jenkins:0.1"
+                    docker_image = docker.build("test-jenkins:0.1", ".")
                 }
             }
         }
