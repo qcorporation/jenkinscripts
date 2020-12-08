@@ -1,0 +1,30 @@
+pipeline{
+    parameters {
+    }
+    options {
+    }
+    environment {
+        DOCKER_IMG_TAG="""${sh(
+                returnStdout: true,
+                script: '''
+                COMMIT=$(git rev-parse --short HEAD)
+                TAG=$(git tag --points-at HEAD)
+                if [ -z "$TAG" ]; then
+                    TAG="HEAD"
+                fi
+                echo -n ${TAG}-${COMMIT}'''
+            )}"""
+    }
+    stages {
+        stage('Build Docker Image') {
+            steps {
+                script{
+                    docker.build("test-jenkins:0.1", ".")
+                    docker.image('test-jenkins:0.1').withRun('') { c->
+                      sh "docker logs ${c.id}"
+                    }
+                }
+            }
+        }
+    }
+}
