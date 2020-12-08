@@ -8,14 +8,17 @@ pipeline {
         timeout(time: 1, unit: 'HOURS') 
     }
     stages {
-        stage('Build & Run Docker Image') {
+        stage('Build Docker Image') {
             steps {
                 script{
                     docker_image = docker.build("test-jenkins:0.1", ".")
-                    docker.image('test-jenkins:0.1').inside(){
-                        sh "python3 /TEST/runner.py"
-                    }
                 }
+            }
+        }
+        stage('Docker Run'){
+            agent { docker 'test-jenkins:0.1' }
+            steps {
+                sh 'python3 /TEST/runner.py'
             }
         }
     }
