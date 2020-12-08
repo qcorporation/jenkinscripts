@@ -5,8 +5,8 @@ pipeline {
         stage('Build & Run Docker Image') {
             steps {
                 script{
-                    docker.build("test-jenkins:0.1", ".")
-                    docker.image('test-jenkins:0.1').withRun('') { c->
+                    any.build("test-jenkins:0.1", ".")
+                    any.image('test-jenkins:0.1').withRun('') { c->
                         sh "docker logs ${c.id}"
                     }
                 }
