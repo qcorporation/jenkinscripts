@@ -12,14 +12,8 @@ pipeline {
             steps {
                 script{
                     docker_image = docker.build("test-jenkins:0.1", ".")
-                    docker.image('test-jenkins:0.1').withRun(){ c ->
-                        sh """
-                            while true
-                            do
-                                sleep 1
-                                docker logs ${c.id} --tail 100
-                            done
-                        """
+                    docker.image('test-jenkins:0.1').inside(){
+                        python3 /TEST/runner.py
                     }
                 }
             }
