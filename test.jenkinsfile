@@ -1,14 +1,14 @@
 pipeline {
     agent any
-
+    options { 
+        timestamps()
+        timeout(time: 1, unit: 'HOURS') 
+    }
     stages {
         stage('Build & Run Docker Image') {
             steps {
                 script{
-                    any.build("test-jenkins:0.1", ".")
-                    any.image('test-jenkins:0.1').withRun('') { c->
-                        sh "docker logs ${c.id}"
-                    }
+                    docker.build "test-jenkins:0.1"
                 }
             }
         }
