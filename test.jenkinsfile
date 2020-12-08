@@ -12,7 +12,9 @@ pipeline {
             steps {
                 script{
                     docker_image = docker.build("test-jenkins:0.1", ".")
-                    docker.image('test-jenkins:0.1').run()
+                    docker.image('test-jenkins:0.1').withRun(){ c ->
+                        sh "docker logs --follow ${c.id}"
+                    }
                 }
             }
         }
