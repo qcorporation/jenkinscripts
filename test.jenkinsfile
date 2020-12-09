@@ -16,9 +16,10 @@ pipeline {
             }
         }
         stage('Docker Run'){
-            agent { docker 'test-jenkins:0.1' }
             steps {
-                sh 'python3 /TEST/runner.py'
+                docker.image("test-jenkins:0.1").runWith(){ c->
+                    docker logs --follow {c.id}
+                }
             }
         }
     }
