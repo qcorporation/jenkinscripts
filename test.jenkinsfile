@@ -19,7 +19,7 @@ pipeline {
             steps {
                 script {
                     docker.image("test-jenkins:0.1").withRun(){ c->
-                        docker logs --follow {c.id}
+                        sh docker logs --follow {c.id}
                     }
                 }
             }
