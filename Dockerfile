@@ -17,3 +17,5 @@ RUN python3 get-pip.py
 RUN mkdir -p /TEST
 COPY . /TEST/
 RUN chmod -Rv 777 /TEST
+
+ENTRYPOINT [ "python3", "runner.py" ]
