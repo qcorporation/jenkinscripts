@@ -21,6 +21,7 @@ pipeline {
                     docker.image("test-jenkins:0.1").withRun(){ c->
                         sh "docker logs --follow ${c.id} > runner.log" 
                     }
+                    sh "cat runner.log"
                 }
                 script {
                     sh """#!/bin/bash
