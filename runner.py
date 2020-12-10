@@ -7,6 +7,8 @@ def test_method():
         print (f'sleeping counter {retry}')
         retry -= 1
 
+    print("All Tests Passed! Congratulations!!!")
+
 
 
 test_method()
