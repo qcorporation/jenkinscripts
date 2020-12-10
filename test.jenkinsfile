@@ -19,8 +19,21 @@ pipeline {
             steps {
                 script {
                     docker.image("test-jenkins:0.1").withRun(){ c->
-                        sh "docker logs --follow ${c.id}"
+                        sh "docker logs --follow ${c.id} > runner.log" 
                     }
+                }
+            }
+            steps {
+                script {
+                    sh """#!/bin/bash
+                        if grep -e "All Tests Passed! Congratulations!!!" runner.log; then
+                            echo "Tests Pass"
+                            exit 0
+                        else
+                            echo "Tests Fail"
+                            exit 1
+                        fi
+                    """
                 }
             }
         }
